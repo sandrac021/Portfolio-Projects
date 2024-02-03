@@ -1,0 +1,15 @@
+ -- countries with highest infection rate compared to population
+SELECT
+  population,
+  MAX((total_cases/population)*100) AS percent_infected,
+  location,
+  MAX(total_cases) AS highest_infected_count
+FROM
+  `data-cleaning-412921.covid_total.deaths`
+WHERE
+  continent IS NOT NULL
+GROUP BY
+  location,
+  population
+ORDER BY
+  2 DESC
