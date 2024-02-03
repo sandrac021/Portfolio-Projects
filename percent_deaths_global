@@ -1,0 +1,15 @@
+  -- deaths globally
+SELECT
+  date,
+  SUM(new_cases) AS total_cases,
+  SUM(new_deaths) AS total_deaths,
+  SUM(new_deaths)/SUM(new_cases)*100 AS percent_deaths_global
+FROM
+  `data-cleaning-412921.covid_total.deaths`
+WHERE
+  continent IS NOT NULL
+  AND total_cases > total_deaths
+GROUP BY
+  date
+ORDER BY
+  date
