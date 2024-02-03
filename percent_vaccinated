@@ -1,0 +1,29 @@
+WITH
+  popvsVac AS (
+  SELECT
+    dea.continent,
+    dea.location,
+    dea.date,
+    vac.daily_people_vaccinated,
+    dea.population,
+    SUM(CAST(vac.daily_people_vaccinated AS int)) OVER (PARTITION BY dea.location ORDER BY dea.location, dea.date) AS rolling_vaccinations
+  FROM
+    `data-cleaning-412921.covid_total.deaths` AS dea
+  JOIN
+    `data-cleaning-412921.covid_total.vaccinations` AS vac
+  ON
+    dea.location = vac.location
+    AND dea.date = vac.date
+  WHERE
+    dea.continent IS NOT NULL
+    AND vac.daily_people_vaccinated IS NOT NULL )
+SELECT
+  *,
+  (rolling_vaccinations/population)*100 AS percent_vaccinated
+FROM
+  popvsVac
+WHERE
+  location LIKE 'Canada'
+ORDER BY
+  3,
+  2
