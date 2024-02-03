@@ -1,0 +1,17 @@
+ -- total cases vs total deaths
+  -- shows the likelihood of dying if you contract covid in your country
+SELECT
+  total_cases,
+  total_deaths,
+  (total_deaths/total_cases)*100 AS percent_died,
+  location,
+  date
+FROM
+  `data-cleaning-412921.covid_total.deaths`
+WHERE
+  total_deaths IS NOT NULL
+  AND total_cases >= total_deaths
+  AND location LIKE 'C%ana%'
+ORDER BY
+  4,
+  5
