@@ -1,0 +1,15 @@
+  -- Countries with Highest Death Count per population
+SELECT
+  MAX(CAST(total_deaths AS int)) AS total_death_count,
+  location,
+  population
+FROM
+  `data-cleaning-412921.covid_total.deaths`
+WHERE
+  total_deaths IS NOT NULL
+  AND continent IS NOT NULL
+GROUP BY
+  location,
+  population
+ORDER BY
+  1 DESC
