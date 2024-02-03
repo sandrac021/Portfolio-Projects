@@ -1,0 +1,16 @@
+  -- total cases vs total population
+  -- shows the amount of people infected per country
+SELECT
+  total_cases,
+  population,
+  (total_cases/population)*100 AS percent_infected,
+  location,
+  date
+FROM
+  `data-cleaning-412921.covid_total.deaths`
+WHERE
+  population >= total_cases
+  AND location LIKE 'Canada'
+ORDER BY
+  4,
+  5
